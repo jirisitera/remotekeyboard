@@ -12,7 +12,7 @@ from tkinter import Canvas, StringVar, ttk
 
 def on_connect(client, userdata, flags, reason_code, properties):
   canvas.delete("all")
-  canvas.create_image(20, 20, image=assets + "/connected.png")
+  canvas.create_image(20, 20, image=connected)
   statusInfo.config(text="Connected")
   currentTopic = topic.get()
   if currentTopic == "":
@@ -21,7 +21,7 @@ def on_connect(client, userdata, flags, reason_code, properties):
 
 def on_disconnect(client, userdata, flags, reason_code, properties):
   canvas.delete("all")
-  canvas.create_image(20, 20, image=assets + "/disconnected.png")
+  canvas.create_image(20, 20, image=disconnected)
   statusInfo.config(text="Not Connected")
 
 def on_message(client, userdata, msg):
