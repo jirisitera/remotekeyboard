@@ -9,26 +9,26 @@ importers:
   .:
     dependencies:
       '@tailwindcss/vite':
-        specifier: ^4.0.14
+        specifier: 4.0.14
         version: 4.0.14(vite@6.2.1(jiti@2.4.2)(lightningcss@1.29.2))
       '@tauri-apps/api':
-        specifier: ^2.3.0
+        specifier: 2.3.0
         version: 2.3.0
       '@tauri-apps/plugin-opener':
-        specifier: ^2.2.6
+        specifier: 2.2.6
         version: 2.2.6
       tailwindcss:
-        specifier: ^4.0.14
+        specifier: 4.0.14
         version: 4.0.14
     devDependencies:
       '@tauri-apps/cli':
-        specifier: ^2.3.1
+        specifier: 2.3.1
         version: 2.3.1
       typescript:
-        specifier: ~5.6.3
+        specifier: 5.6.3
         version: 5.6.3
       vite:
-        specifier: ^6.2.1
+        specifier: 6.2.1
         version: 6.2.1(jiti@2.4.2)(lightningcss@1.29.2)
 
 packages:
