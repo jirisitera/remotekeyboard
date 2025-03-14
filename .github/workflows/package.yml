@@ -4,6 +4,7 @@ permissions:
 jobs:
   publish:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - platform: 'windows-latest'
@@ -36,7 +37,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
         with:
-          tagName: app-v__VERSION__
-          releaseName: 'Remote Keyboard App v__VERSION__'
-          releaseBody: 'See the assets to download this version and install.'
+          tagName: __VERSION__.${{github.run_number}}
+          releaseName: 'Remote Keyboard __VERSION__.${{github.run_number}}'
+          releaseBody: 'Download the correct installer for your platform below and run it to install the app.'
           args: ${{matrix.args}}
