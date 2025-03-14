@@ -17,9 +17,13 @@ jobs:
     runs-on: ${{matrix.platform}}
     steps:
       - uses: actions/checkout@main
+      - uses: pnpm/action-setup@master
+        with:
+          version: latest
       - uses: actions/setup-node@main
         with:
           node-version: latest
+          cache: 'pnpm'
       - uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || ''}}
