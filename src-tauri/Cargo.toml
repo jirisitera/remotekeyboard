@@ -4,6 +4,7 @@ version = "1.0.2"
 description = "A remotely controlled keyboard."
 authors = ["japicraft"]
 license = "MIT"
+edition = "2021"
 
 [lib]
 name = "remotekeyboard_lib"
