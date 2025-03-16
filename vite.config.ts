@@ -1,6 +1,5 @@
 import { defineConfig } from "vite";
 import tailwindcss from '@tailwindcss/vite';
-// @ts-expect-error
 const host = process.env.TAURI_DEV_HOST;
 export default defineConfig(async () => ({
   plugins: [tailwindcss()],
