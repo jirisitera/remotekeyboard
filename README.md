@@ -11,6 +11,25 @@ There are two editions of this system included in this repository.
 
 The app connects to MQTT and listens for messages. When a message is received, the app will simulate a key press on the computer.
 
+To try out a test version of the app, you will first need to install the following:
+
+- Microsoft C++ Build Tools
+- WebView2 (Usually already installed on Windows)
+- Rust (Requires C++ Build Tools to be installed first)
+- Node.js (pnpm is recommended)
+
+You can find instructions on how to install all these components [here](https://v2.tauri.app/start/prerequisites/).
+
+Finally, once you have everything installed, you can run the following commands to build the app:
+
+```bash
+pnpm install
+```
+
+```bash
+pnpm tauri dev
+```
+
 ## Boards
 
 ### ESP board
