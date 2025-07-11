@@ -1,56 +1,83 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8"/>
+<head>
+    <meta charset="UTF-8" />
     <title>Remote Keyboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="/styles.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/styles.css" />
     <script type="module" src="/main.ts" defer></script>
-  </head>
-  <body>
-    <div class="space-y-10 pt-5 pb-10 m-10">
-      <div class="flex flex-col lg:flex-row lg:items-center lg:space-y-0 lg:space-x-8">
-          <h1 class="text-blue-400 shiny-sec text-5xl md:text-6xl font-medium text-pretty leading-none">Remote Keyboard</h1>
-          <p class="text-md md:text-2xl text-white">A remotely controlled keyboard.</p>
-      </div>
-      <div class="grid gap-6 mb-6 md:grid-cols-2">
-          <div>
-              <label for="urlInput" class="block mb-2 text-sm font-medium text-white">Enter MQTT Broker URL</label>
-              <input type="text" id="urlInput" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="test.mosquitto.org" required/>
-          </div>
-          <div>
-              <label for="portInput" class="block mb-2 text-sm font-medium text-white">Enter MQTT Broker Port</label>
-              <input type="text" id="portInput" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="8081" required/>
-          </div>
-          <div>
-              <label for="topicSendInput" class="block mb-2 text-sm font-medium text-white">Enter Topic To Send To</label>
-              <input type="text" id="topicSendInput" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="iotcraft/send" required/>
-          </div>
-          <div>
-              <label for="topicReceiveInput" class="block mb-2 text-sm font-medium text-white">Enter Topic To Receive From</label>
-              <input type="text" id="topicReceiveInput" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="iotcraft/receive" required/>
-          </div>
-      </div>
-      <label class="flex p-8 rounded-md bg-gray-800 border-gray-400 justify-center cursor-pointer">
-          <input id="connectButton" type="checkbox" value="" class="sr-only peer">
-          <div class="relative w-11 h-6 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-800 rounded-full peer bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all border-gray-600 peer-checked:bg-blue-600"></div>
-          <span class="ms-3 mt-0.5 mr-4 text-sm font-medium text-gray-300">Toggle MQTT Connection</span>
-          <div id="connectionStatus">
-            <span class="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-full bg-red-900 text-red-300">
-                <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>Disconnected
-            </span>
-          </div>
-      </label>
-      <div class="bg-gray-800 shadow-md rounded-lg w-full">
-          <div class="p-4 border-b border-black bg-blue-800 text-white rounded-t-lg flex justify-between items-center">
-              <p class="text-lg font-semibold">MQTT Chat</p>
-          </div>
-          <div id="chatbox" class="p-4 h-80 overflow-y-auto"></div>
-          <div class="p-4 border-t border-black flex">
-              <input id="textInput" type="text" placeholder="Type a message" class="w-full bg-gray-700 text-white px-3 py-2 border rounded-l-md border-black focus:outline-none focus:ring-2 focus:ring-blue-500"></input>
-              <button id="sendButton" class="bg-blue-800 text-white px-4 py-2 rounded-r-md hover:bg-blue-700 transition duration-300">Send</button>
-          </div>
-      </div>
+</head>
+<body>
+    <div aria-hidden="true" class="absolute pointer-events-none inset-0 grid grid-cols-2 -space-x-52 opacity-40 dark:opacity-20">
+        <div class="blur-[106px] h-56 bg-gradient-to-br from-[var(--color-main)] to-purple-400 dark:from-blue-700"></div>
+        <div class="blur-[106px] h-32 bg-gradient-to-r from-cyan-400 to-sky-300 dark:to-indigo-600"></div>
     </div>
-  </body>
+    <div class="space-y-10 pt-5 pb-10 m-10">
+        <div class="flex flex-col lg:flex-row lg:items-center lg:space-y-0 lg:space-x-8">
+            <h1 class="text-blue-400 shiny-sec text-5xl md:text-6xl font-medium text-pretty leading-none">Remote Keyboard</h1>
+            <p class="text-md md:text-2xl text-white">A remotely controlled keyboard.</p>
+        </div>
+        <div class="grid gap-6 mb-6 md:grid-cols-3">
+            <div>
+                <label for="urlInput" class="block mb-2 text-sm font-medium text-white">Enter MQTT Broker URL</label>
+                <input type="text" id="urlInput" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="test.mosquitto.org" required />
+            </div>
+            <div>
+                <label for="portInput" class="block mb-2 text-sm font-medium text-white">Enter MQTT Broker Port</label>
+                <input type="text" id="portInput" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="8081" required />
+            </div>
+            <div>
+                <label for="topicReceiveInput" class="block mb-2 text-sm font-medium text-white">Enter Topic To Receive From</label>
+                <input type="text" id="topicReceiveInput" class="border text-sm rounded-lg block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500" placeholder="iotcraft/receive" required />
+            </div>
+        </div>
+        <div class="grid gap-6 mb-6 md:grid-cols-3">
+            <div>
+                <button id="addButton" class="bg-gray-50 border border-gray-300 text-md rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600">Add Keybind</button>
+            </div>
+            <div>
+                <button id="removeButton" class="bg-gray-50 border border-gray-300 text-md rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600">Remove Keybind</button>
+            </div>
+            <div>
+                <button id="saveButton" class="bg-gray-50 border border-gray-300 text-md rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600">Save All Data</button>
+            </div>
+        </div>
+        <div
+            class="relative overflow-x-auto rounded-lg bg-gray-50 border border-gray-300 dark:bg-gray-700 dark:border-gray-600">
+            <table class="w-full text-sm text-left rtl:text-right" id="keybinds">
+                <tr>
+                    <th scope="col" class="px-6 py-2 text-md">Key to be pressed</th>
+                    <th scope="col" class="px-6 py-2 text-md">Topic to send to</th>
+                    <th scope="col" class="px-6 py-2 text-md">Message to send</th>
+                </tr>
+                <tr>
+                    <td class="px-6 py-2">
+                        <input required type="text" placeholder="w" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    </td>
+                    <td class="px-6 py-2">
+                        <input required type="text" placeholder="topic" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    </td>
+                    <td class="px-6 py-2">
+                        <input required type="text" placeholder="Message" class="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <label class="flex p-8 rounded-md bg-gray-800 border-gray-400 justify-center cursor-pointer">
+            <input id="connectButton" type="checkbox" value="" class="sr-only peer">
+            <div class="relative w-11 h-6 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-800 rounded-full peer bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all border-gray-600 peer-checked:bg-blue-600"></div>
+            <span class="ms-3 mt-0.5 mr-4 text-sm font-medium text-gray-300">Toggle MQTT Connection</span>
+            <div id="connectionStatus">
+                <span class="inline-flex items-center text-xs font-medium px-2.5 py-1 rounded-full bg-red-900 text-red-300">
+                    <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>Disconnected
+                </span>
+            </div>
+        </label>
+        <label class="flex p-8 rounded-md bg-gray-800 border-gray-400 justify-center cursor-pointer">
+            <input id="listenButton" type="checkbox" value="" class="sr-only peer">
+            <div class="relative w-11 h-6 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-800 rounded-full peer bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all border-gray-600 peer-checked:bg-blue-600"></div>
+            <span class="ms-3 mt-0.5 mr-4 text-sm font-medium text-gray-300">Toggle Keyboard Listener</span>
+        </label>
+    </div>
+</body>
 </html>

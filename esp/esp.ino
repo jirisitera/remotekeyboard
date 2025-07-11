@@ -16,37 +16,37 @@ PubSubClient mqttClient(wifiClient);
 SoftwareSerial remoteKeyboard(4, 5);
 
 void setup() {
-  remoteKeyboard.begin(9600);
-  connectWiFi();
-  mqttClient.setServer(mqttUrl, mqttPort);
-  mqttClient.setCallback(mqttCallback);
-  connectMQTT();
+    remoteKeyboard.begin(9600);
+    connectWiFi();
+    mqttClient.setServer(mqttUrl, mqttPort);
+    mqttClient.setCallback(mqttCallback);
+    connectMQTT();
 }
 void connectWiFi() {
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-  }
+    WiFi.begin(ssid, password);
+    while (WiFi.status() != WL_CONNECTED) {
+        delay(500);
+    }
 }
 void connectMQTT() {
-  while (!mqttClient.connected()) {
-    String clientId = "esp-client-" + String(WiFi.macAddress());
-    if (mqttClient.connect(clientId.c_str(), mqttUser, mqttPass)) {
-      mqttClient.subscribe(mqttTopic);
-      mqttClient.publish(mqttTopic, "Remote Keyboard connected!");
-    } else {
-      delay(5000);
+    while (!mqttClient.connected()) {
+        String clientId = "esp-client-" + String(WiFi.macAddress());
+        if (mqttClient.connect(clientId.c_str(), mqttUser, mqttPass)) {
+            mqttClient.subscribe(mqttTopic);
+            mqttClient.publish(mqttTopic, "Remote Keyboard connected!");
+        } else {
+            delay(5000);
+        }
     }
-  }
 }
 void mqttCallback(char *topic, byte *payload, unsigned int length) {
-  for (unsigned int i = 0; i < length; i++) {
-    remoteKeyboard.write((char) payload[i]);
-  }
+    for (unsigned int i = 0; i < length; i++) {
+        remoteKeyboard.write((char) payload[i]);
+    }
 }
 void loop() {
-  if (!mqttClient.connected()) {
-    connectMQTT();
-  }
-  mqttClient.loop();
+    if (!mqttClient.connected()) {
+        connectMQTT();
+    }
+    mqttClient.loop();
 }
